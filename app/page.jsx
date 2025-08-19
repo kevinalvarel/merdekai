@@ -1,9 +1,9 @@
-import Image from "next/image";
+import { SidebarChat } from "@/components/sidebar-chat";
 
 export default function Home() {
   return (
     <>
-      <h1>Welkam</h1>
+      <SidebarChat />
     </>
   );
 }
