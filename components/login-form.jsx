@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { IconBrandGoogle } from "@tabler/icons-react";
 
 export function LoginForm({ className, ...props }) {
   return (
@@ -43,7 +44,7 @@ export function LoginForm({ className, ...props }) {
                   Masuk
                 </Button>
                 <Button variant="outline" className="w-full">
-                  Masuk dengan Google
+                  Masuk dengan Google <IconBrandGoogle />
                 </Button>
               </div>
             </div>
