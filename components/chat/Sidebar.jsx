@@ -4,8 +4,6 @@ import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 
-import { useSession } from "@/lib/auth-client";
-
 const SidebarContext = createContext(undefined);
 
 export const useSidebar = () => {

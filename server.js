@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/", async (req, res) => {
+app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
     const reply = await openais(message);
