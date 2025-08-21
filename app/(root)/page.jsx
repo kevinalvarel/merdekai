@@ -10,8 +10,13 @@ import {
 import { cn } from "@/lib/utils";
 import ChatArea from "@/components/chat/ChatArea";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 const SidebarChat = () => {
+  const handleLogout = async () => {
+    await authClient.signOut();
+  };
+
   const links = [
     {
       label: "Percakapan Baru",
@@ -46,8 +51,9 @@ const SidebarChat = () => {
           </div>
           <div>
             <SidebarLink
+              onClick={handleLogout}
               link={{
-                label: "Login",
+                label: "Keluar",
                 icon: (
                   <IconLogin className="h-5 w-5 shrink-0 text-neutral-700" />
                 ),

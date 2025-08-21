@@ -120,8 +120,6 @@ export const MobileSidebar = ({ className, children, ...props }) => {
 };
 
 export const SidebarLink = ({ link, className, ...props }) => {
-  const { data: session } = useSession();
-
   const { open, animate } = useSidebar();
   return (
     <a

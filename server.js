@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const { openais } = require("./openai.js"); //
+const { openais } = require("./openai"); //
+const { describeImage } = require("./describeImage.js");
 
 const app = express();
 app.use(cors());
@@ -15,6 +16,16 @@ app.post("/", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Something went wrong" });
+  }
+});
+app.post("/image", async (req, res) => {
+  try {
+    const { message, messagetxt } = req.body;
+    const reply = await describeImage(message, messagetxt);
+    res.json({ reply });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ reply: "⚠️ Gagal memproses gambar." });
   }
 });
 

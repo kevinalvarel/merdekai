@@ -16,39 +16,80 @@ export default function ChatArea() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+  const handleSend = async (message) => {
+    // message: { text: string, image: base64|null }
 
-  const handleSend = async (text) => {
-    if (!text.trim()) return;
+    if ((!message.text && !message.image) || isLoading) return;
 
-    const newMessage = { id: Date.now(), text, sender: "user" };
+    const newMessage = {
+      id: Date.now(),
+      text: message.text,
+      image: message.image,
+      sender: "user",
+    };
     setMessages((prev) => [...prev, newMessage]);
     setIsLoading(true);
 
-    try {
-      const res = await fetch("http://localhost:3001/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
-      });
+    if (message.image) {
+      console.log("Image...");
 
-      const data = await res.json();
+      try {
+        const res = await fetch("http://localhost:3001/image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: message.image,
+            messagetxt: message.text,
+          }), // or send image too if supported
+        });
 
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now() + 1, text: data.reply, sender: "ai" },
-      ]);
-    } catch (err) {
-      console.error(err);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          text: "⚠️ Error: gagal ambil balasan.",
-          sender: "ai",
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
+        const data = await res.json();
+
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 1, text: data.reply, sender: "ai" },
+        ]);
+      } catch (err) {
+        console.error(err);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            text: "⚠️ Error: gagal ambil balasan.",
+            sender: "ai",
+          },
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      console.log("Text....");
+      try {
+        const res = await fetch("http://localhost:3001/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: message.text }), // or send image too if supported
+        });
+
+        const data = await res.json();
+
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 1, text: data.reply, sender: "ai" },
+        ]);
+      } catch (err) {
+        console.error(err);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            text: "⚠️ Error: gagal ambil balasan.",
+            sender: "ai",
+          },
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -86,7 +127,7 @@ export default function ChatArea() {
               </div>
             </div>
           ) : (
-            <div className="px-4 py-6 space-y-6 max-w-4xl mx-auto">
+            <div className="px-6 py-6 space-y-6 w-full max-w-6xl mx-auto">
               {messages.map((msg) => (
                 <MessageBubble key={msg.id} message={msg} />
               ))}
@@ -99,14 +140,13 @@ export default function ChatArea() {
 
       {/* Message Input Area */}
       <div className="border-t bg-white">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <MessageInput onSend={handleSend} isLoading={isLoading} />
         </div>
       </div>
     </div>
   );
 }
-
 function MessageBubble({ message }) {
   const isUser = message.sender === "user";
 
@@ -130,15 +170,29 @@ function MessageBubble({ message }) {
       </div>
 
       {/* Message Content */}
-      <div className={`max-w-[70%] ${isUser ? "text-right" : ""}`}>
+      <div className={`flex-1 ${isUser ? "text-right" : ""}`}>
         <div
-          className={`inline-block px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+          className={`inline-block px-4 py-3 rounded-2xl text-sm leading-relaxed max-w-full ${
             isUser
               ? "bg-red-500 text-white rounded-br-md"
               : "bg-gray-100 text-gray-800 rounded-bl-md border border-gray-200"
           }`}
         >
-          <div className="whitespace-pre-wrap break-words">{message.text}</div>
+          {/* Show image if exists */}
+          {message.image && (
+            <div className="mb-3">
+              <img
+                src={message.image}
+                alt="sent image"
+                className="max-w-full max-h-80 rounded-lg object-cover shadow-sm"
+              />
+            </div>
+          )}
+          {message.text && (
+            <div className="whitespace-pre-wrap break-words">
+              {message.text}
+            </div>
+          )}
         </div>
 
         {/* Timestamp */}
