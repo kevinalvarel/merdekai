@@ -1,10 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Sidebar,
-  SidebarBody,
-  SidebarLink,
-} from "../../components/chat/Sidebar";
+import { Sidebar, SidebarBody, SidebarLink } from "@/components/Sidebar";
 import {
   IconBrain,
   IconImageInPicture,
@@ -36,11 +32,6 @@ export default function ChatLayout({ children }) {
       label: "Percakapan Baru",
       href: "/chat",
       icon: <IconPencil className="h-5 w-5 shrink-0 text-neutral-700" />,
-    },
-    {
-      label: "Quiz Nasional",
-      href: "/chat/quiz",
-      icon: <IconBrain className="h-5 w-5 shrink-0 text-neutral-700" />,
     },
     {
       label: "Generative AI",

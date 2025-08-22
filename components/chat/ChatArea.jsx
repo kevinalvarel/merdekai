@@ -249,9 +249,10 @@ function MessageBubble({ message }) {
             isUser ? "text-right" : ""
           }`}
         >
-          {new Date().toLocaleTimeString([], {
+          {new Date().toLocaleTimeString("id-ID", {
             hour: "2-digit",
             minute: "2-digit",
+            hour12: false,
           })}
         </div>
       </div>

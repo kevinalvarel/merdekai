@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import ChatArea from "@/components/chat/ChatArea";
+import ChatGenerative from "@/components/chat/generative/ChatGenerative";
 
 const GenerativePage = () => {
-  return <ChatArea />;
+  return <ChatGenerative />;
 };
 
 export default GenerativePage;

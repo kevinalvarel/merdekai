@@ -1,9 +1,12 @@
 "use client";
 import SignIn from "@/components/login-form";
 import { AuroraBackground } from "@/components/ui/aurora-bg";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { motion } from "motion/react";
 
 export default function LoginPage() {
+  useDocumentTitle("Masuk - MerdekAI");
+
   return (
     <AuroraBackground>
       <motion.div
