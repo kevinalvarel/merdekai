@@ -7,6 +7,7 @@ import { useSession } from "@/lib/auth-client";
 export default function ChatArea() {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -142,6 +143,47 @@ export default function ChatArea() {
           <MessageInput onSend={handleSend} isLoading={isLoading} />
         </div>
       </div>
+
+      {/* Image Modal */}
+      {modalImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50 cursor-pointer animate-fade-in"
+          onClick={() => setModalImage(null)}
+        >
+          <div className="relative max-w-[95vw] max-h-[95vh] p-4">
+            {/* Close button */}
+            <button
+              className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors z-10 shadow-lg"
+              onClick={(e) => {
+                e.stopPropagation();
+                setModalImage(null);
+              }}
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Image */}
+            <img
+              src={modalImage}
+              alt="Full size image"
+              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -156,7 +198,7 @@ function MessageBubble({ message }) {
       <div
         className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
           isUser
-            ? "bg-red-500 text-white"
+            ? "bg-gradient-to-b from-red-500 to-red-200 text-white"
             : "bg-gray-100 text-gray-600 border-2 border-gray-200"
         }`}
       >
@@ -172,7 +214,7 @@ function MessageBubble({ message }) {
         <div
           className={`inline-block rounded-2xl text-sm leading-relaxed max-w-full ${
             isUser
-              ? "bg-red-500 text-white rounded-br-md"
+              ? "bg-gradient-to-b from-red-600 to-red-400 text-white rounded-br-md"
               : "bg-gray-100 text-gray-800 rounded-bl-md border border-gray-200"
           } ${message.image && !message.text ? "p-1" : "px-4 py-3"}`}
         >
@@ -186,61 +228,12 @@ function MessageBubble({ message }) {
                   className={`max-w-full max-h-80 object-cover shadow-lg transition-transform duration-200 group-hover:scale-[1.02] cursor-pointer ${
                     message.text ? "rounded-lg" : "rounded-xl"
                   }`}
-                  onClick={() => {
-                    // Create a modal to view full image
-                    const modal = document.createElement("div");
-                    modal.className =
-                      "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 cursor-pointer";
-                    modal.onclick = () => modal.remove();
-
-                    const img = document.createElement("img");
-                    img.src = message.image;
-                    img.className =
-                      "max-w-[90vw] max-h-[90vh] object-contain rounded-lg";
-                    img.onclick = (e) => e.stopPropagation();
-
-                    modal.appendChild(img);
-                    document.body.appendChild(modal);
-                  }}
+                  onClick={() => setModalImage(message.image)}
                 />
                 {/* Image overlay for better visual feedback */}
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100">
-                  <svg
-                    className="w-8 h-8 text-white drop-shadow-lg"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                    />
-                  </svg>
-                </div>
+                <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100"></div>
               </div>
               {/* Image info */}
-              <div
-                className={`text-xs mt-2 ${
-                  isUser ? "text-red-100" : "text-gray-500"
-                } flex items-center gap-1`}
-              >
-                <svg
-                  className="w-3 h-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <span>Klik untuk memperbesar</span>
-              </div>
             </div>
           )}
           {message.text && (

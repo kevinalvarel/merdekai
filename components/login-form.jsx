@@ -51,31 +51,29 @@ export default function SignIn() {
   };
 
   return (
-    <Card className="max-w-md">
-      <CardHeader>
-        <CardTitle className="text-lg md:text-xl">Sign In</CardTitle>
-        <CardDescription className="text-xs md:text-sm">
-          Enter your email below to login to your account
+    <Card className="max-w-md w-full bg-white/10 backdrop-blur-md border-white/20 shadow-2xl">
+      <CardHeader className="text-center">
+        <CardTitle className="text-2xl font-bold text-white">Masuk</CardTitle>
+        <CardDescription className="text-slate-200">
+          Pilih metode masuk yang Anda inginkan
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
-          <div
-            className={cn(
-              "w-full gap-2 flex items-center",
-              "justify-between flex-col"
-            )}
-          >
+          <div className="w-full gap-3 flex flex-col">
             <Button
               variant="outline"
-              className={cn("w-full gap-2")}
+              className={cn(
+                "w-full gap-3 h-12 bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white transition-all duration-200",
+                loading && "opacity-50"
+              )}
               disabled={loading}
               onClick={handleSignInWithGoogle}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="0.98em"
-                height="1em"
+                width="1.2em"
+                height="1.2em"
                 viewBox="0 0 256 262"
               >
                 <path
@@ -95,18 +93,31 @@ export default function SignIn() {
                   d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
                 ></path>
               </svg>
-              Sign in with Google
+              {loading ? "Memuat..." : "Masuk dengan Google"}
             </Button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-white/20" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-transparent px-2 text-slate-300">ATAU</span>
+              </div>
+            </div>
+
             <Button
               variant="outline"
-              className={cn("w-full gap-2")}
+              className={cn(
+                "w-full gap-3 h-12 bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white transition-all duration-200",
+                loading && "opacity-50"
+              )}
               disabled={loading}
               onClick={handleSignInWithGithub}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="1em"
-                height="1em"
+                width="1.2em"
+                height="1.2em"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -114,7 +125,7 @@ export default function SignIn() {
                   d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"
                 ></path>
               </svg>
-              Sign in with Github
+              {loading ? "Memuat..." : "Masuk dengan Github"}
             </Button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 const OpenAI = require("openai");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -22,7 +22,6 @@ async function openais(message) {
     presence_penalty: 0,
     frequency_penalty: 0,
   });
-
 
   return completion.choices[0]?.message?.content ?? "";
 }

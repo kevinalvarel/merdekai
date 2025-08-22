@@ -15,6 +15,11 @@ async function describeImage(image, text) {
         role: "system",
         content:
           "You are an Indonesian assistant. Describe the image in detail.",
+        temperature: 0.7,
+        max_tokens: 1000,
+        top_p: 1,
+        presence_penalty: 0,
+        frequency_penalty: 0,
       },
       {
         role: "user",
