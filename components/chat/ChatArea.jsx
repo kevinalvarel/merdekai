@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import MessageInput from "./MessageInput";
 import Profil from "/public/logo.png";
 import Image from "next/image";
+import { useSession } from "@/lib/auth-client";
 
 export default function ChatArea() {
   const [messages, setMessages] = useState([]);
@@ -90,6 +91,8 @@ export default function ChatArea() {
     }
   };
 
+  const { data: session } = useSession();
+
   return (
     <div className="flex-1 flex flex-col h-full bg-white">
       {/* Chat Messages Area */}
@@ -114,7 +117,7 @@ export default function ChatArea() {
                   </svg>
                 </div>
                 <h1 className="text-2xl font-semibold text-gray-800 mb-2">
-                  Hallo
+                  Hallo {session?.user?.name || ""}
                 </h1>
                 <p className="text-gray-500 text-sm">
                   Mulai percakapan dengan mengetikkan pesan Anda di bawah

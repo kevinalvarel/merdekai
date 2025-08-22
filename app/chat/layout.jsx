@@ -1,6 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/chat/Sidebar";
+import {
+  Sidebar,
+  SidebarBody,
+  SidebarLink,
+} from "../../components/chat/Sidebar";
 import {
   IconBrain,
   IconLogin,
@@ -11,9 +15,20 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import MerdekaiLogo from "@/public/logo.png";
 import "../globals.css";
+import { authClient } from "@/lib/auth-client";
 
 export default function ChatLayout({ children }) {
   const [open, setOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/"); // redirect to login page
+        },
+      },
+    });
+  };
 
   const links = [
     {
@@ -55,6 +70,7 @@ export default function ChatLayout({ children }) {
               </div>
               <div>
                 <SidebarLink
+                  onClick={handleSignOut}
                   link={{
                     label: "Keluar",
                     icon: (
