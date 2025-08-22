@@ -7,6 +7,7 @@ import {
 } from "../../components/chat/Sidebar";
 import {
   IconBrain,
+  IconImageInPicture,
   IconLogin,
   IconPencil,
   IconUserBolt,
@@ -42,9 +43,11 @@ export default function ChatLayout({ children }) {
       icon: <IconBrain className="h-5 w-5 shrink-0 text-neutral-700" />,
     },
     {
-      label: "Profil",
-      href: "#",
-      icon: <IconUserBolt className="h-5 w-5 shrink-0 text-neutral-700" />,
+      label: "Generative AI",
+      href: "/chat/generative",
+      icon: (
+        <IconImageInPicture className="h-5 w-5 shrink-0 text-neutral-700" />
+      ),
     },
   ];
 
