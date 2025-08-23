@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from "react";
 
 const MessageInput = ({ onSend, isLoading }) => {
   const [input, setInput] = useState("");
+  const [cooldownEnd, setCooldownEnd] = useState(null);
+  const [remainingTime, setRemainingTime] = useState(0);
   const textareaRef = useRef(null);
 
   const handleChange = (e) => {
@@ -21,6 +23,27 @@ const MessageInput = ({ onSend, isLoading }) => {
     }
   }, [input]);
 
+  // Cooldown timer effect
+  useEffect(() => {
+    let interval = null;
+    if (cooldownEnd) {
+      interval = setInterval(() => {
+        const now = Date.now();
+        const remaining = Math.max(0, cooldownEnd - now);
+        setRemainingTime(remaining);
+
+        if (remaining === 0) {
+          setCooldownEnd(null);
+          clearInterval(interval);
+        }
+      }, 1000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [cooldownEnd]);
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -28,9 +51,25 @@ const MessageInput = ({ onSend, isLoading }) => {
     }
   };
 
+  // Helper function to format remaining time
+  const formatTime = (ms) => {
+    const totalSeconds = Math.ceil(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const isOnCooldown = cooldownEnd && remainingTime > 0;
+
   const handleSend = () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || cooldownEnd) return;
     if (onSend) onSend({ text: input.trim() });
+
+    // Set cooldown for 2 minutes (120000 ms)
+    const cooldownDuration = 0.5 * 60 * 1000; // 2 minutes
+    setCooldownEnd(Date.now() + cooldownDuration);
+    setRemainingTime(cooldownDuration);
+
     setInput("");
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -49,19 +88,25 @@ const MessageInput = ({ onSend, isLoading }) => {
               value={input}
               onChange={handleChange}
               onKeyDown={handleKeyPress}
-              placeholder="Ketik pesan Anda untuk membuat gambar..."
+              placeholder={
+                isOnCooldown
+                  ? `Tunggu ${formatTime(
+                      remainingTime
+                    )} untuk membuat gambar lagi...`
+                  : "Ketik pesan Anda untuk membuat gambar..."
+              }
               className="w-full resize-none border-none outline-none text-sm bg-transparent placeholder-gray-500 max-h-20"
               rows={1}
-              disabled={isLoading}
+              disabled={isLoading || isOnCooldown}
             />
           </div>
 
           {/* Send Button */}
           <button
             onClick={handleSend}
-            disabled={!input.trim() || isLoading}
+            disabled={!input.trim() || isLoading || isOnCooldown}
             className={`p-2 rounded-lg transition-all ${
-              input.trim() && !isLoading
+              input.trim() && !isLoading && !isOnCooldown
                 ? "bg-blue-500 text-white hover:bg-blue-600 shadow-md"
                 : "bg-gray-100 text-gray-400 cursor-not-allowed"
             }`}
@@ -100,7 +145,11 @@ const MessageInput = ({ onSend, isLoading }) => {
 
         {/* Help Text */}
         <p className="text-xs text-gray-500 mt-2 text-center">
-          Tekan Enter untuk kirim • Shift+Enter untuk baris baru
+          {isOnCooldown
+            ? `Maaf, Tunggu ${formatTime(
+                remainingTime
+              )} untuk membuat gambar lagi :(`
+            : "Tekan Enter untuk kirim • Shift+Enter untuk baris baru"}
         </p>
       </div>
     </div>

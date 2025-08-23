@@ -24,6 +24,7 @@ export default function ChatGenerative() {
       id: Date.now(),
       text: message.text,
       sender: "user",
+      timestamp: new Date(),
     };
     setMessages((prev) => [...prev, newMessage]);
     setIsLoading(true);
@@ -43,6 +44,7 @@ export default function ChatGenerative() {
           id: Date.now() + 1,
           image: data.reply,
           sender: "ai",
+          timestamp: new Date(),
         },
       ]);
     } catch (err) {
@@ -53,6 +55,7 @@ export default function ChatGenerative() {
           id: Date.now() + 1,
           text: "⚠️ Error: gagal ambil gambar.",
           sender: "ai",
+          timestamp: new Date(),
         },
       ]);
     } finally {
@@ -87,7 +90,7 @@ export default function ChatGenerative() {
                     </svg>
                   </div>
                   <h1 className="text-3xl font-bold text-gray-800 mb-4">
-                    Halo, {session?.user?.name || "User"}!
+                    Halo, {session?.user?.name || ""}
                   </h1>
                   <p className="text-lg text-gray-600">
                     Siap untuk membuat gambar dengan AI?
@@ -220,7 +223,7 @@ function MessageBubble({ message, setModalImage }) {
             isUser ? "text-right" : "text-left"
           }`}
         >
-          {new Date().toLocaleTimeString("id-ID", {
+          {message.timestamp?.toLocaleTimeString("id-ID", {
             hour: "2-digit",
             minute: "2-digit",
           })}

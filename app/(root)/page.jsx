@@ -1,7 +1,6 @@
 "use client";
-import SignIn from "@/components/login-form";
+import SignIn from "@/components/LoginForm";
 import { AuroraBackground } from "@/components/ui/aurora-bg";
-import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { motion } from "motion/react";
 
 export default function LoginPage() {
