@@ -1,6 +1,12 @@
-import { config } from "dotenv";
-import { drizzle } from "drizzle-orm/neon-http";
+const { Pool } = require("pg");
+const { drizzle } = require("drizzle-orm/node-postgres");
+require("dotenv").config();
 
-config({ path: ".env" }); // or .env.local
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }, // required for Neon
+});
 
-export const db = drizzle(process.env.DATABASE_URL);
+const db = drizzle(pool);
+
+module.exports = { db };

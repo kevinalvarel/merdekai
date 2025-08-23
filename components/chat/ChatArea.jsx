@@ -4,6 +4,7 @@ import Profil from "/public/logo.png";
 import Image from "next/image";
 import { useSession } from "@/lib/auth-client";
 
+
 export default function ChatArea() {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,13 +20,13 @@ export default function ChatArea() {
   }, [messages]);
   const handleSend = async (message) => {
     if ((!message.text && !message.image) || isLoading) return;
-
-    const newMessage = {
-      id: Date.now(),
-      text: message.text,
-      image: message.image,
-      sender: "user",
+    const dataChat = {
+      id: "123abc",
+      name: "Charlie",
+      email: "charlie@example.com",
+      image: "https://example.com/avatar.png"
     };
+
     setMessages((prev) => [...prev, newMessage]);
     setIsLoading(true);
 
