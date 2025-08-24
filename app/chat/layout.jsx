@@ -20,10 +20,6 @@ export const metadata = {
 export default function ChatLayout({ children }) {
   return (
     <html>
-      <meta
-        http-equiv="Content-Security-Policy"
-        content="upgrade-insecure-requests"
-      ></meta>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
