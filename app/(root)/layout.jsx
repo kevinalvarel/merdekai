@@ -10,10 +10,16 @@ export const metadata = {
 export default function HomeLayout({ children }) {
   return (
     <html>
-      <body>
-        <Header />
-        <main>{children}</main>
-      </body>
+      <head>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        ></meta>
+        <body>
+          <Header />
+          <main>{children}</main>
+        </body>
+      </head>
     </html>
   );
 }
