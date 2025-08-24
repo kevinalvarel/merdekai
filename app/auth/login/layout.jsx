@@ -19,13 +19,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body>
-        <main
-          className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
-        >
-          {children}
-        </main>
-      </body>
+      <head>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        ></meta>
+        <body>
+          <main
+            className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
+          >
+            {children}
+          </main>
+        </body>
+      </head>
     </html>
   );
 }
