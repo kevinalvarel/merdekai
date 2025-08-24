@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const { openais } = require("./openai"); //
-const { describeImage } = require("./describeImage.js");
-const { generateImage } = require("./generateimage.js");
+const { openais } = require("./utils/openai"); //
+const { describeImage } = require("./utils/describeImage.js");
+const { generateImage } = require("./utils/generateimage.js");
 const app = express();
 const { db } = require("./db/drizzle.js");
 const { user, chat } = require("./db/schema");
