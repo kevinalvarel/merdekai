@@ -4,7 +4,6 @@ import Profil from "/public/logo.png";
 import Image from "next/image";
 import { useSession } from "@/lib/auth-client";
 
-
 export default function ChatArea() {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +23,14 @@ export default function ChatArea() {
       id: "123abc",
       name: "Charlie",
       email: "charlie@example.com",
-      image: "https://example.com/avatar.png"
+      image: "https://example.com/avatar.png",
+    };
+
+    const newMessage = {
+      id: Date.now(),
+      text: message.text || "",
+      image: message.image || null,
+      sender: "user",
     };
 
     setMessages((prev) => [...prev, newMessage]);

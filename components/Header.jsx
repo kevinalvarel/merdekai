@@ -10,6 +10,7 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-header";
+import { useSession } from "@/lib/auth-client";
 import { useState } from "react";
 
 export function Header() {
@@ -28,6 +29,8 @@ export function Header() {
     },
   ];
 
+  const { data: session } = useSession();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -38,7 +41,12 @@ export function Header() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary">Login</NavbarButton>
+            <NavbarButton
+              href={session ? "/chat" : "/auth/login"}
+              variant="secondary"
+            >
+              {session ? "Chat" : "Login"}
+            </NavbarButton>
           </div>
         </NavBody>
 
@@ -71,9 +79,9 @@ export function Header() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
                 className="w-full"
-                href="/"
+                href={session ? "/chat" : "/auth/login"}
               >
-                Login
+                {session ? "Chat" : "Login"}
               </NavbarButton>
             </div>
           </MobileNavMenu>

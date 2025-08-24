@@ -3,9 +3,9 @@ import React, { useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export const BackgroundRippleEffect = ({
-  rows = 8,
-  cols = 27,
-  cellSize = 56,
+  rows = 15,
+  cols = 30,
+  cellSize = 60,
 }) => {
   const [clickedCell, setClickedCell] = useState(null);
   const [rippleKey, setRippleKey] = useState(0);
@@ -43,9 +43,9 @@ export const BackgroundRippleEffect = ({
 
 const DivGrid = ({
   className,
-  rows = 10,
+  rows = 15,
   cols = 30,
-  cellSize = 56,
+  cellSize = 60,
   borderColor = "#3f3f46",
   fillColor = "rgba(120, 120, 120, 1)",
   clickedCell = null,

@@ -38,7 +38,7 @@ export default function Navbar({ children }) {
     },
     {
       label: "Tentang Kami",
-      href: "/home",
+      href: "/",
       icon: (
         <Image
           src={MerdekaiLogo}
@@ -75,7 +75,7 @@ export default function Navbar({ children }) {
                 icon: (
                   <IconLogin className="h-5 w-5 shrink-0 text-neutral-700" />
                 ),
-                href: "/",
+                href: "/auth/login",
               }}
             />
           </div>

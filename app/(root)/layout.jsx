@@ -1,30 +1,18 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Header } from "@/components/Header";
 import "../globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata = {
-  title: "Masuk - MerdekAI",
-  description: "Masuk ke akun MerdekAI Anda",
+  title: "MerdekAI",
+  description:
+    "Platform AI untuk membantu produktivitas Anda dengan berbagai fitur canggih",
 };
 
-export default function RootLayout({ children }) {
+export default function HomeLayout({ children }) {
   return (
     <html>
       <body>
-        <main
-          className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
-        >
-          {children}
-        </main>
+        <Header />
+        <main>{children}</main>
       </body>
     </html>
   );
