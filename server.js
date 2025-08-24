@@ -10,7 +10,7 @@ const { user, chat } = require("./db/schema");
 app.use(cors());
 app.use(express.json());
 
-app.post("https://merdekai.my.id/imagegen", async (req, res) => {
+app.post("/imagegen", async (req, res) => {
   try {
     const { message } = req.body;
     console.log(message);
@@ -23,7 +23,7 @@ app.post("https://merdekai.my.id/imagegen", async (req, res) => {
   }
 });
 
-app.post("https://merdekai.my.id/chat", async (req, res) => {
+app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
     console.log(message);
@@ -36,7 +36,7 @@ app.post("https://merdekai.my.id/chat", async (req, res) => {
   }
 });
 
-app.post("https://merdekai.my.id/image", async (req, res) => {
+app.post("/image", async (req, res) => {
   try {
     const { message, messagetxt } = req.body;
     const reply = await describeImage(message, messagetxt);

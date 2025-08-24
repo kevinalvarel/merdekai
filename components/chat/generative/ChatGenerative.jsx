@@ -30,7 +30,7 @@ export default function ChatGenerative() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("https://merdekai.my.id/imagegen", {
+      const res = await fetch("http://localhost:3001/imagegen", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message.text }),
