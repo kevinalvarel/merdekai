@@ -35,8 +35,19 @@ export function Testimonial() {
 
 const testimonials = [
   {
-    quote: "",
-    name: "Sarah Putri",
+    quote: "Sangat membantu saya dalam membuat ide konten dengan cepat!",
+    name: "Naufal Farid",
     title: "Graphic Designer",
+  },
+  {
+    quote: "Dapat memberikan solusi dari masaalah yang saya hadapi.",
+    name: "Azka Maulana",
+    title: "Programmer",
+  },
+  {
+    quote:
+      "MerdekAI memudahkan saya dalam menyelesaikan tugas-tugas sekolah saya.",
+    name: "Faizal Rizky",
+    title: "Programmer",
   },
 ];

@@ -40,7 +40,7 @@ export default function ChatArea() {
       console.log("Image...");
 
       try {
-        const res = await fetch("http://localhost:3001/image", {
+        const res = await fetch("/image", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -71,7 +71,7 @@ export default function ChatArea() {
     } else {
       console.log("Text....");
       try {
-        const res = await fetch("http://localhost:3001/chat", {
+        const res = await fetch("/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: message.text }), // or send image too if supported
