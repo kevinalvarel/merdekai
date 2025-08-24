@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { openais } = require("./openai"); //
 const { describeImage } = require("./describeImage.js");
-const { generateImage }= require("./generateimage.js")
+const { generateImage } = require("./generateimage.js");
 const app = express();
 const { db } = require("./db/drizzle.js");
 const { user, chat } = require("./db/schema");
@@ -10,10 +10,10 @@ const { user, chat } = require("./db/schema");
 app.use(cors());
 app.use(express.json());
 
-app.post("/imagegen", async (req, res) => {
+app.post("https://merdekai.my.id/imagegen", async (req, res) => {
   try {
     const { message } = req.body;
-    console.log(message)
+    console.log(message);
     const reply = await generateImage(message);
     console.log(reply);
     res.json({ reply });
@@ -23,10 +23,10 @@ app.post("/imagegen", async (req, res) => {
   }
 });
 
-app.post("/chat", async (req, res) => {
+app.post("https://merdekai.my.id/chat", async (req, res) => {
   try {
     const { message } = req.body;
-    console.log(message)
+    console.log(message);
     const reply = await openais(message);
     console.log(reply);
     res.json({ reply });
@@ -36,7 +36,7 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-app.post("/image", async (req, res) => {
+app.post("https://merdekai.my.id/image", async (req, res) => {
   try {
     const { message, messagetxt } = req.body;
     const reply = await describeImage(message, messagetxt);
@@ -47,17 +47,15 @@ app.post("/image", async (req, res) => {
   }
 });
 
-
 app.get("/api/users", async (req, res) => {
   try {
-    const allUsers = await db.select().from(chat); 
+    const allUsers = await db.select().from(chat);
     res.json(allUsers);
   } catch (err) {
     console.error("DB Error:", err);
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.post("/add/chat", async (req, res) => {
   try {
@@ -66,7 +64,7 @@ app.post("/add/chat", async (req, res) => {
     const newUser = await db
       .insert(user)
       .values({
-        id,        
+        id,
         name,
         email,
         image,
@@ -83,8 +81,6 @@ app.post("/add/chat", async (req, res) => {
   }
 });
 
-
 app.listen(3001, () => {
   console.log("🚀 Server running at http://localhost:3001");
 });
-
