@@ -3,27 +3,19 @@ const OpenAI = require("openai");
 require("dotenv").config();
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: "https://api.lunos.tech/v1",
+  apiKey: "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",
 });
 
 async function openais(message) {
   console.log("API KEY starts with:", process.env.OPENAI_API_KEY);
 
-  const completion = await openai.chat.completions.create({
-    model: "openai/gpt-4o",
-    messages: [
-      { role: "system", content: "you are a indonesian assistant" },
-      { role: "user", content: message },
-    ],
-    temperature: 0.7,
-    max_tokens: 1000,
-    top_p: 1,
-    presence_penalty: 0,
-    frequency_penalty: 0,
-  });
+const response = await openai.responses.create({
+  model: "gpt-5-nano",
+  input: message,
+  store: true,
+});
 
-  return completion.choices[0]?.message?.content ?? "";
+  return response.output_text ?? "";
 }
 
 module.exports = { openais };
