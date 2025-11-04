@@ -7,7 +7,7 @@ const openai = new OpenAI({
 });
 
 async function openais(message) {
-  console.log("API KEY starts with:", process.env.OPENAI_API_KEY);
+
 
 const response = await openai.responses.create({
   model: "gpt-5-nano",
