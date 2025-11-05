@@ -7,6 +7,7 @@ const openai = new OpenAI({
 
 async function describeImage(image, text) {
   if (!image) throw new Error("❌ No image provided");
+  console.log(image);
   const response = await openai.responses.create({
   model: "gpt-5-nano",
   input: [
