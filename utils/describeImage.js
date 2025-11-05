@@ -29,7 +29,7 @@ async function describeImage(image, text) {
         },
         {
           type: "input_image",
-          image_url: `data:image/jpeg;base64,${imageBase64}`
+          image_url: image
         }
       ]
     }
