@@ -22,7 +22,7 @@ const response = await openai.responses.create({
   store: true,
 });
 
-  return response.output_text ?? "";
+  return response.output_text ?? "Tidak ada respon";
 }
 
 module.exports = { openais };
