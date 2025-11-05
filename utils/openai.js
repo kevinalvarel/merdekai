@@ -7,11 +7,18 @@ const openai = new OpenAI({
 });
 
 async function openais(message) {
-
-
 const response = await openai.responses.create({
   model: "gpt-5-nano",
-  input: message,
+  input: [
+    {
+      role: "system",
+      content: "You are an AI bot named LearningX. You only receive and respond to text messages — never images.",
+    },
+    {
+      role: "user",
+      content: message,
+    },
+  ],
   store: true,
 });
 
