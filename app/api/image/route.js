@@ -15,7 +15,6 @@ export async function POST(req) {
   }
 }
 
-// Optional biar bisa dicek di browser langsung (GET)
 export async function GET() {
   return Response.json({ message: "Image API ready ✅" });
 }

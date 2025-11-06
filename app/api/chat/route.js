@@ -11,7 +11,6 @@ export async function POST(req) {
   }
 }
 
-// Optional: biar GET gak error 405 pas cek manual di browser
 export async function GET() {
   return Response.json({ message: "Chat API ready ✅" });
 }
