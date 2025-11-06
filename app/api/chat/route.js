@@ -4,6 +4,7 @@ export async function POST(req) {
   try {
     const { message } = await req.json();
     const reply = await openais(message);
+    console.log(reply)
     return Response.json({ reply });
   } catch (err) {
     console.error(err);
